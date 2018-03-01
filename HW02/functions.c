@@ -15,7 +15,7 @@ unsigned int modprod(unsigned int a, unsigned int b, unsigned int p) {
 
 	b_i = b % 2;
 	ab = (ab + za * b_i) % p;
-	b = b / 2;
+	b /= 2;
 	za = (2 * za) % p;
     }
     return ab;
@@ -37,7 +37,7 @@ unsigned int modExp(unsigned int a, unsigned int b, unsigned int p) {
 	}
 	
 	z = modProd(z, z, p);
-	b = b / 2;
+	b /= 2;
     }
     return aExpb;
 }
@@ -92,10 +92,42 @@ unsigned int isProbablyPrime(unsigned int N) {
 
   //if we're testing a large number switch to Miller-Rabin primality test
   /* Q2.1: Complete this part of the isProbablyPrime function using the Miller-Rabin pseudo-code */
+  //find r,d such that N - 1 = (2^r)*d where d is odd
   unsigned int r,d;
-
-  for (unsigned int n=0;n<NsmallPrimes;n++) {
   
+  //N-1 will be even based on previous test, so continue dividing by 2 until an odd number (d) is reached
+  // i.e. d = (N-1)/(2^r)
+  r = 1;
+  d = (N - 1) / 2;
+  
+  while (d % 2 == 0) {
+
+    d /= 2;
+    r += 1;
+  }
+  
+  unsigned int k, x;
+  for (unsigned int n=0;n<NsmallPrimes;n++) {
+    
+    k = smallPrimeList[n];
+    x = modExp(k, d, N);
+    if (x == 1 || x == N - 1) {
+	continue;
+    }
+    
+    for (int i = 0; i < r - 1; i++) {
+
+	x = modProd(x, x, N);
+	if (x == 1) {
+	    return 0;
+	}
+	if (x == N - 1) {
+	    continue;
+	}
+    }
+    return 0;
+  }
+  return 1;  
   }
   return 1; //true
 }
