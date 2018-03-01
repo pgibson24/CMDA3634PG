@@ -41,14 +41,24 @@ int main (int argc, char **argv) {
 
   /* Q3.2: Use isProbablyPrime and randomXbitInt to find a new random n-bit prime number 
      which satisfies p=2*q+1 where q is also prime */
-  int q;
+  int q = 4; // give q a nonprime number to ensure it enters while loop 
+  
+  while (isProbablyPrime(q) == 0) {
+	
+	p = randXbitInt(n);
+	if (isProbablyPrime(p) == 0) {
+	    continue;
+	}
+	
+	q = (p - 1) / 2;
+  }
 
-	printf("p = %u is probably prime and equals 2*q + 1. q= %u and is also probably prime.\n", p, q);  
+  printf("p = %u is probably prime and equals 2*q + 1. q= %u and is also probably prime.\n", p, q);  
 
-	/* Q3.3: use the fact that p=2*q+1 to quickly find a generator */
-	unsigned int g = findGenerator(p);
+  /* Q3.3: use the fact that p=2*q+1 to quickly find a generator */
+  unsigned int g = findGenerator(p);
 
-	printf("g = %u is a generator of Z_%u \n", g, p);  
+  printf("g = %u is a generator of Z_%u \n", g, p);  
 
   return 0;
 }

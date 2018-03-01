@@ -33,10 +33,10 @@ unsigned int modExp(unsigned int a, unsigned int b, unsigned int p) {
 	b_i = b % 2;
 	if (b_i == 1) {
 	    
-	    aExpb = modProd(aExpb, z, p);
+	    aExpb = modprod(aExpb, z, p);
 	}
 	
-	z = modProd(z, z, p);
+	z = modprod(z, z, p);
 	b /= 2;
     }
     return aExpb;
@@ -117,7 +117,7 @@ unsigned int isProbablyPrime(unsigned int N) {
     
     for (int i = 0; i < r - 1; i++) {
 
-	x = modProd(x, x, N);
+	x = modprod(x, x, N);
 	if (x == 1) {
 	    return 0;
 	}
@@ -132,5 +132,9 @@ unsigned int isProbablyPrime(unsigned int N) {
 
 //Finds a generator of Z_p using the assumption that p=2*q+1
 unsigned int findGenerator(unsigned int p) {
-  /* Q3.3: complete this function and use the fact that p=2*q+1 to quickly find a generator */
+  
+    unsigned int g; 
+
+    g = (p - 1) / 2;
+    return g;  
 }
