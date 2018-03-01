@@ -128,8 +128,6 @@ unsigned int isProbablyPrime(unsigned int N) {
     return 0;
   }
   return 1;  
-  }
-  return 1; //true
 }
 
 //Finds a generator of Z_p using the assumption that p=2*q+1
